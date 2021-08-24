@@ -7,37 +7,27 @@
 import argparse
 
 parser = argparse.ArgumentParser(description='Search pfam/tigrfam search output for matching HMM IDs.')
-parser.add_argument('-i', type=str, default='interleaved.fq',
-                    metavar='INPUT', help='path to input file')
-parser.add_argument('-1', type=str, default='read1.fq',
-                    metavar='OUTPUT1', help='path to read 1 output file')
-parser.add_argument('-2', type=str, default='read2.fq',
-                    metavar='OUTPUT2', help='path to read 2 output file')
+parser.add_argument('--fam-search', type=str, metavar='FAM TBLOUT', help='path to fam output file')
+parser.add_argument('--fam-type', type=str, metavar='FAM TYPE', help='type of fam output [pfam, tigrfam]')
+parser.add_argument('--hmm-list', type=str, metavar='REQ HMMS', help='path to required HMM list')
+parser.add_argument('--output', type=str, metavar='OUTPUT', help='path to fam output file')
 
 args = parser.parse_args()
-input_path = getattr(args, 'i')
-output1_path = getattr(args, '1')
-output2_path = getattr(args, '2')
+fam_search_file = getattr(args, 'fam-search')
+fam_type = getattr(args, 'fam-type')
+HMM_id_list = getattr(args, 'hmm-list')
+output_file = getattr(args, 'output') # or STDOUT
 
-with open(input_path) as input, open(output1_path, 'a') as output1, open(output2_path, 'a') as output2:
+# check output non-existant?
+
+with open(fam_search_file) as input, open(output_file, 'a') as output:
     while True:
         line = input.readline()
 
         if not line:
             break
 
-        # ID row starts with @ symbol
-        if line.startswith('@'):
-            # check ending of ID row for read indicator (/1 or /2)
-            if line.strip().endswith('/1'):
-                output1.write(line)
-                output1.write(input.readline())
-                output1.write(input.readline())
-                output1.write(input.readline())
-            elif line.strip().endswith('/2'):
-                output2.write(line)
-                output2.write(input.readline())
-                output2.write(input.readline())
-                output2.write(input.readline())
-
+        if not line.startswith('#'):
+            if False:
+                output.write(line)
 
