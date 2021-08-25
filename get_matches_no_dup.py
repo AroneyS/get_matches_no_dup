@@ -8,7 +8,7 @@ import argparse
 import csv
 import re
 from collections import Counter
-import pdb
+
 
 parser = argparse.ArgumentParser(description='Search pfam/tigrfam search output for matching HMM IDs.')
 parser.add_argument('--fam-search', type=str, metavar='FAM TBLOUT', help='path to fam output file')
