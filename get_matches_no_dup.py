@@ -27,7 +27,7 @@ output_path = getattr(args, 'output')
 
 if fam_type.lower() == "pfam":
     FAM_HMM_ID_COLUMN = 5
-    FAM_HMM_HIT_COLUMN = 7
+    FAM_HMM_HIT_COLUMN = 11
 elif fam_type.lower() == "tigrfam":
     FAM_HMM_ID_COLUMN = 3
     FAM_HMM_HIT_COLUMN = 5
@@ -65,6 +65,7 @@ with open(fam_search_path) as input_file, open(output_path, 'w') as output_file:
     # Remove HMMs with multiple gene hits
     hmm_counter = Counter([hmm_id for _,hmm_id in derep_list])
     output_list = [[seq_id,hmm_id] for seq_id,hmm_id in derep_list if hmm_counter[hmm_id] == 1]
+
 
     output.writerows(output_list)
 
